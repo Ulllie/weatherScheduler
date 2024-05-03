@@ -1,8 +1,8 @@
-package org.ulllie.weatherscheduler.repository;
+package org.ulllie.weather.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import org.ulllie.weatherscheduler.table.Weather;
+import org.ulllie.weather.table.Weather;
 
 import java.util.UUID;
 

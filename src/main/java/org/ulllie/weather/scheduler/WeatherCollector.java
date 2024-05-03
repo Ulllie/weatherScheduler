@@ -1,38 +1,36 @@
-package org.ulllie.weatherscheduler.scheduler;
+package org.ulllie.weather.scheduler;
 
-import lombok.AllArgsConstructor;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
-import org.ulllie.weatherscheduler.dto.WeatherMainInfo;
-import org.ulllie.weatherscheduler.repository.WeatherRepository;
-import org.ulllie.weatherscheduler.table.Weather;
-import org.ulllie.weatherscheduler.weather_client.WeatherClient;
+import org.springframework.stereotype.Component;
+import org.ulllie.weather.dto.WeatherMainInfo;
+import org.ulllie.weather.repository.WeatherRepository;
+import org.ulllie.weather.table.Weather;
+import org.ulllie.weather.weather_client.WeatherService;
 
 import java.time.OffsetDateTime;
-import java.util.UUID;
 
-@Service
+@Component
 public class WeatherCollector {
 
-    @Autowired
-    WeatherClient weatherClient;
-
-    @Autowired
-    WeatherRepository weatherRepository;
+    private final WeatherService weatherService;
+    private final WeatherRepository weatherRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(WeatherCollector.class);
 
+    public WeatherCollector(WeatherService weatherService, WeatherRepository weatherRepository) {
+        this.weatherService = weatherService;
+        this.weatherRepository = weatherRepository;
+    }
 
     @Scheduled(cron = "0/10 * * * * ?")
     @SchedulerLock(name = "collect_weather_task")
     public void collect() {
         String city = "Moscow";
         logger.info("Start collect weather in {}", city);
-        WeatherMainInfo weatherInfo = weatherClient.get(city);
+        WeatherMainInfo weatherInfo = weatherService.getMainInfo(city);
 
         Weather weatherEntity = new Weather(
                 weatherInfo.temp(),
@@ -43,5 +41,4 @@ public class WeatherCollector {
 
         weatherRepository.save(weatherEntity);
     }
-
 }

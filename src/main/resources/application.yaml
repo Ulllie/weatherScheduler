@@ -23,4 +23,4 @@ logging:
 
 weather:
   api:
-    key: ${WEATHER_API_KEY}
+    key: ${WEATHER_API_KEY:404}

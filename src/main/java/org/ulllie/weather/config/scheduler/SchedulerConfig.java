@@ -1,4 +1,4 @@
-package org.ulllie.weatherscheduler.scheduler.config;
+package org.ulllie.weather.config.scheduler;
 
 import net.javacrumbs.shedlock.core.LockProvider;
 import net.javacrumbs.shedlock.provider.jdbctemplate.JdbcTemplateLockProvider;

@@ -1,4 +1,4 @@
-package org.ulllie.weatherscheduler.scheduler.interceptors;
+package org.ulllie.weather.interceptors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpRequest;

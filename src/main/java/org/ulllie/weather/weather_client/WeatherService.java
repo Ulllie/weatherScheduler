@@ -1,4 +1,4 @@
-package org.ulllie.weatherscheduler.weather_client;
+package org.ulllie.weather.weather_client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -6,16 +6,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
-import org.ulllie.weatherscheduler.dto.WeatherMainInfo;
+import org.ulllie.weather.dto.WeatherMainInfo;
 
 @Component
-public class WeatherClient {
+public class WeatherService {
 
     private final RestClient openWeatherClient;
-
     private final ObjectMapper mapper;
 
-    public WeatherClient(
+    public WeatherService(
             @Qualifier(value = "openWeatherClient") RestClient openWeatherClient,
             ObjectMapper mapper
     ) {
@@ -23,7 +22,7 @@ public class WeatherClient {
         this.mapper = mapper;
     }
 
-    public WeatherMainInfo get(String city) {
+    public WeatherMainInfo getMainInfo(String city) {
         String response = openWeatherClient.get()
                 .uri("/?q={city}", city)
                 .retrieve()

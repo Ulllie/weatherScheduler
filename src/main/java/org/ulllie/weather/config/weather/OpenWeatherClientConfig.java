@@ -1,12 +1,12 @@
-package org.ulllie.weatherscheduler.scheduler.config;
+package org.ulllie.weather.config.weather;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
-import org.ulllie.weatherscheduler.scheduler.interceptors.OpenWeatherInterceptorKey;
+import org.ulllie.weather.interceptors.OpenWeatherInterceptorKey;
 
 @Configuration
-public class OpenWeatherConfig {
+public class OpenWeatherClientConfig {
 
     @Bean
     public RestClient openWeatherClient(OpenWeatherInterceptorKey openWeatherInterceptorKey) {

@@ -1,4 +1,4 @@
-package org.ulllie.weatherscheduler.dto;
+package org.ulllie.weather.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
