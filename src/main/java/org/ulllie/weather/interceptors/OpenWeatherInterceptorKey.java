@@ -14,7 +14,7 @@ import java.net.URI;
 @Component
 public class OpenWeatherInterceptorKey implements ClientHttpRequestInterceptor {
 
-    @Value("${weather.api.key}")
+    @Value("${open-weather.api-key}")
     private String API_KEY;
 
     @Override

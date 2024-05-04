@@ -3,25 +3,29 @@ package org.ulllie.weather.scheduler;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.ulllie.weather.dto.WeatherMainInfo;
 import org.ulllie.weather.repository.WeatherRepository;
 import org.ulllie.weather.table.Weather;
-import org.ulllie.weather.weather_client.WeatherService;
+import org.ulllie.weather.weather_client.WeatherClient;
 
 import java.time.OffsetDateTime;
 
 @Component
 public class WeatherCollector {
 
-    private final WeatherService weatherService;
+    private final WeatherClient weatherClient;
     private final WeatherRepository weatherRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(WeatherCollector.class);
 
-    public WeatherCollector(WeatherService weatherService, WeatherRepository weatherRepository) {
-        this.weatherService = weatherService;
+    public WeatherCollector(
+            @Qualifier("weatherClientImpl") WeatherClient weatherClient,
+            WeatherRepository weatherRepository
+    ) {
+        this.weatherClient = weatherClient;
         this.weatherRepository = weatherRepository;
     }
 
@@ -30,7 +34,7 @@ public class WeatherCollector {
     public void collect() {
         String city = "Moscow";
         logger.info("Start collect weather in {}", city);
-        WeatherMainInfo weatherInfo = weatherService.getMainInfo(city);
+        WeatherMainInfo weatherInfo = weatherClient.getMainInfo(city);
 
         Weather weatherEntity = new Weather(
                 weatherInfo.temp(),
